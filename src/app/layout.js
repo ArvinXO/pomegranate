@@ -15,6 +15,16 @@ const lato = Lato({
   weight: ["300", "400", "700", "900"],
 });
 
+export const metadata = {
+  title: "Pomegranate House",
+  description: "Pomegranate House - Elegant, professional, and feminine consulting.",
+  icons: {
+    icon: "/logo.webp",
+    shortcut: "/logo.webp",
+    apple: "/logo.webp",
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>

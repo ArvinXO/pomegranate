@@ -14,13 +14,13 @@ export default function Footer() {
                     <div className="space-y-6">
                         <Link href="/" className="inline-flex items-center space-x-3 group">
                             <img
-                                src="/pom.webp"
+                                src="/logo.webp"
                                 alt="Pomegranate House Logo"
                                 className="h-16 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
                             />
                             <span className="flex text-2xl font-serif tracking-tight">
                                 <span className="text-primary">Pomegranate</span>
-                                <span className="text-secondary italic ml-1">House</span>
+                                <span className="text-secondary italic ml-1 pr-4">House</span>
                             </span>
                         </Link>
                         <p className="text-white/60 leading-relaxed max-w-xs">

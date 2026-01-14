@@ -155,7 +155,7 @@ pomegranate/
 │       └── Team.js            # Team showcase component
 │
 ├── public/                    # Static assets
-│   ├── pom.webp              # Logo
+│   ├── logo.webp             # Logo
 │   ├── pomhouse.png          # Hero image
 │   └── [team-photos].webp   # Team member photos
 │

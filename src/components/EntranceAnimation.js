@@ -43,7 +43,7 @@ export default function EntranceAnimation() {
                         >
                             <motion.img
                                 layoutId="hero-logo"
-                                src="/pom.webp"
+                                src="/logo.webp"
                                 alt="Pomegranate House"
                                 className="h-32 w-auto object-contain z-50 mr-8 md:mr-0"
                                 transition={{
@@ -82,9 +82,9 @@ export default function EntranceAnimation() {
                                 filter: "blur(0px)",
                                 transition: { delay: 0.8, duration: 1, ease: "easeOut" }
                             }}
-                            className="text-center md:text-left relative overflow-hidden"
+                            className="text-center md:text-left relative"
                         >
-                            <h1 className="text-5xl md:text-7xl font-serif text-foreground mb-4 select-none relative">
+                            <h1 className="text-5xl md:text-7xl font-serif text-foreground mb-4 select-none relative whitespace-nowrap">
                                 <motion.span
                                     layoutId="brand-text-pomegranate"
                                     className="inline-block"
@@ -99,7 +99,7 @@ export default function EntranceAnimation() {
                                     transition={{
                                         layout: { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
                                     }}
-                                    className="text-primary italic ml-2 inline-block"
+                                    className="text-primary italic ml-2 inline-block pr-4"
                                 >
                                     House
                                 </motion.span>

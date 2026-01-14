@@ -116,7 +116,7 @@ export default function Navbar() {
                                     <Link href="/" className="flex items-center space-x-3 group relative z-[101]">
                                         <motion.img
                                             layoutId="hero-logo"
-                                            src="/pom.webp"
+                                            src="/logo.webp"
                                             alt="Pomegranate House"
                                             className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                             transition={{
@@ -134,7 +134,7 @@ export default function Navbar() {
                                             </motion.span>
                                             <motion.span
                                                 layoutId="brand-text-house"
-                                                className="text-secondary italic ml-1"
+                                                className="text-secondary italic ml-1 pr-4"
                                                 transition={{
                                                     layout: { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
                                                 }}
