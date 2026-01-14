@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Mail, User, Briefcase, MapPin, Clock } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 const FloralDivider = () => (
@@ -17,7 +17,7 @@ const FloralDivider = () => (
     </div>
 );
 
-export default function HireUsPage() {
+function HireUsContent() {
     const searchParams = useSearchParams();
     const [formData, setFormData] = useState({
         firstName: "",
@@ -56,9 +56,7 @@ export default function HireUsPage() {
     };
 
     return (
-        <main className="min-h-screen bg-cream">
-            <Navbar />
-
+        <>
             {/* Hero Section */}
             <section className="pt-32 pb-32 relative overflow-hidden persian-floral-bg">
                 <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gold/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
@@ -264,39 +262,34 @@ export default function HireUsPage() {
                         {/* Area of Business */}
                         <div className="space-y-3">
                             <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
-                                Area of Business <span className="text-primary font-serif">*</span>
+                                Area of Interest <span className="text-primary font-serif">*</span>
                             </label>
                             <div className="relative group">
                                 <Briefcase className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/30 group-focus-within:text-primary transition-colors duration-300" size={18} />
                                 <select
                                     required
-                                    className="w-full pl-14 pr-10 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none appearance-none text-foreground font-light cursor-pointer"
+                                    className="w-full pl-14 pr-6 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none text-foreground font-light appearance-none cursor-pointer"
                                     value={formData.areaOfBusiness}
                                     onChange={(e) => setFormData({ ...formData, areaOfBusiness: e.target.value })}
                                 >
-                                    <option value="">Select an area</option>
-                                    {businessAreas.map((area, idx) => (
-                                        <option key={idx} value={area}>{area}</option>
+                                    <option value="">Select a service area</option>
+                                    {businessAreas.map((area) => (
+                                        <option key={area} value={area}>{area}</option>
                                     ))}
                                 </select>
-                                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
-                                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gold/50">
-                                        <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                    </svg>
-                                </div>
                             </div>
                         </div>
 
                         {/* Message */}
                         <div className="space-y-3">
                             <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
-                                How Can We Help? <span className="text-primary font-serif">*</span>
+                                Tell Us About Your Project <span className="text-primary font-serif">*</span>
                             </label>
                             <textarea
                                 required
                                 rows={6}
-                                className="w-full px-8 py-6 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-[2.5rem] transition-all duration-500 outline-none resize-none text-foreground font-light leading-relaxed"
-                                placeholder="Please describe your enquiry in detail to help us understand your needs better..."
+                                className="w-full px-6 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none text-foreground font-light resize-none"
+                                placeholder="Share your vision, challenges, and goals..."
                                 value={formData.message}
                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             />
@@ -306,19 +299,33 @@ export default function HireUsPage() {
                         <div className="pt-8">
                             <button
                                 type="submit"
-                                className="w-full px-8 py-6 bg-primary text-white rounded-full font-bold text-xl hover:bg-primary/90 transition-all duration-500 shadow-3xl shadow-primary/20 hover:scale-[1.02] border border-gold/30"
+                                className="w-full px-12 py-6 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all duration-300 shadow-3xl shadow-primary/20 hover:scale-[1.02] border border-gold/30 group relative overflow-hidden"
                             >
-                                Secure Your Consultation
+                                <span className="relative z-10">Send Enquiry</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                             </button>
                         </div>
-
-                        <p className="text-sm text-foreground/30 text-center italic font-light tracking-wide">
-                            "Bridging grassroots realities to global power."
-                        </p>
                     </motion.form>
                 </div>
             </section>
+        </>
+    );
+}
 
+export default function HireUsPage() {
+    return (
+        <main className="min-h-screen bg-cream">
+            <Navbar />
+            <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4" />
+                        <p className="text-foreground/40 font-light">Loading...</p>
+                    </div>
+                </div>
+            }>
+                <HireUsContent />
+            </Suspense>
             <Footer />
         </main>
     );
