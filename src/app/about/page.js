@@ -350,18 +350,19 @@ export default function AboutPage() {
             </AnimatePresence>
 
             {/* Bottom Quote */}
-            <section className="py-24 bg-primary text-white relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] bg-[length:20px_20px]" />
-
+            <section className="py-32 bg-cream relative overflow-hidden persian-floral-bg">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <motion.p
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-2xl sm:text-3xl lg:text-4xl font-serif italic"
+                        className="p-16 bg-white rounded-[4rem] text-foreground shadow-2xl relative overflow-hidden border border-gold/20"
                     >
-                        "Together, we form the complete fruit of change"
-                    </motion.p>
+                        <div className="absolute inset-0 opacity-[0.03] persian-floral-bg" />
+                        <p className="text-3xl sm:text-4xl font-serif italic text-primary relative z-10">
+                            "Together, we form the complete fruit of change"
+                        </p>
+                    </motion.div>
                 </div>
             </section>
 

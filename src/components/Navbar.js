@@ -64,6 +64,7 @@ export default function Navbar() {
         {
             title: "Services",
             items: [
+                { title: "Overview", href: "/services" },
                 { title: "Consultancy & Care Package", href: "/services/consultancy" },
                 { title: "Governance", href: "/services/governance" },
                 { title: "Gender at Work", href: "/services/gender-at-work" },
@@ -82,7 +83,7 @@ export default function Navbar() {
             title: "News",
             items: [
                 { title: "Our Blogs", href: "/blogs" },
-                { title: "Social Media", href: "/social-media" },
+                { title: "Social Media", href: "https://www.instagram.com/pom.hse" },
             ],
         },
     ];
@@ -134,7 +135,7 @@ export default function Navbar() {
                                             </motion.span>
                                             <motion.span
                                                 layoutId="brand-text-house"
-                                                className="text-secondary italic ml-1 pr-4"
+                                                className="text-gold italic ml-1 pr-4"
                                                 transition={{
                                                     layout: { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
                                                 }}
@@ -163,7 +164,7 @@ export default function Navbar() {
                         ))}
                         <Link
                             href="/hire-us"
-                            className="ml-4 px-6 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:scale-105"
+                            className="ml-4 px-6 py-2.5 bg-primary text-white rounded-full text-sm font-bold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:scale-105 border border-gold/30"
                         >
                             Hire us
                         </Link>

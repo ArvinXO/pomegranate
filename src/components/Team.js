@@ -33,10 +33,10 @@ export default function Team() {
     ];
 
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
-            {/* Decorative Pomegranate Shapes */}
-            <div className="absolute top-0 left-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
+        <section className="py-32 bg-cream relative overflow-hidden persian-floral-bg">
+            {/* Decorative Gold Elements */}
+            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-20">
@@ -77,7 +77,13 @@ export default function Team() {
                         className="flex justify-center mb-12"
                     >
                         <div className="group relative">
-                            <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-primary shadow-2xl relative bg-accent group-hover:scale-105 transition-transform duration-300">
+                            {/* Gold rotating ring */}
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                className="absolute -inset-4 rounded-full border border-gold/20 border-dashed"
+                            />
+                            <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-gold shadow-[0_20px_50px_rgba(117,3,44,0.15)] relative bg-accent group-hover:scale-105 transition-transform duration-500">
                                 <Image
                                     src={team[0].image}
                                     alt={team[0].name}
@@ -108,7 +114,7 @@ export default function Team() {
                                 }}
                                 className="group relative"
                             >
-                                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-secondary shadow-xl relative bg-accent group-hover:scale-105 group-hover:border-primary transition-all duration-300">
+                                <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-gold/30 shadow-xl relative bg-accent group-hover:scale-105 group-hover:border-primary transition-all duration-500">
                                     <Image
                                         src={member.image}
                                         alt={member.name}
@@ -143,7 +149,7 @@ export default function Team() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 1.4 }}
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30 hover:scale-105 hover:shadow-xl group"
+                        className="inline-flex items-center gap-3 px-10 py-5 bg-primary text-white rounded-full font-bold hover:bg-primary/90 transition-all duration-500 shadow-2xl shadow-primary/30 hover:scale-105 border border-gold/30 group"
                     >
                         <span>Learn More About Our Team</span>
                         <svg

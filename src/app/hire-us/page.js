@@ -3,10 +3,22 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Upload, Mail, User, FileText, Briefcase } from "lucide-react";
-import { useState } from "react";
+import { Mail, User, Briefcase, MapPin, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+
+const FloralDivider = () => (
+    <div className="flex items-center justify-center space-x-4 my-12">
+        <div className="w-20 h-[1px] bg-gradient-to-r from-transparent to-gold/30" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gold/50">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor" />
+        </svg>
+        <div className="w-20 h-[1px] bg-gradient-to-l from-transparent to-gold/30" />
+    </div>
+);
 
 export default function HireUsPage() {
+    const searchParams = useSearchParams();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -15,6 +27,20 @@ export default function HireUsPage() {
         areaOfBusiness: "",
         message: ""
     });
+
+    // Pre-fill form from query parameters
+    useEffect(() => {
+        const subject = searchParams.get('subject');
+        const message = searchParams.get('message');
+
+        if (subject || message) {
+            setFormData(prev => ({
+                ...prev,
+                ...(subject && { areaOfBusiness: subject }),
+                ...(message && { message: message })
+            }));
+        }
+    }, [searchParams]);
 
     const businessAreas = [
         "Consultancy",
@@ -30,19 +56,26 @@ export default function HireUsPage() {
     };
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen bg-cream">
             <Navbar />
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 bg-gradient-to-br from-primary/10 via-accent to-secondary/10 relative overflow-hidden">
-                <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-primary/10 blur-3xl" />
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
+            <section className="pt-32 pb-32 relative overflow-hidden persian-floral-bg">
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gold/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2" />
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="inline-block px-6 py-2 rounded-full border border-gold/30 bg-gold/5 text-gold font-bold text-xs uppercase tracking-[0.3em] mb-10"
+                    >
+                        Strategic Partnership
+                    </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl lg:text-7xl font-serif text-foreground text-center mb-6"
+                        className="text-6xl lg:text-[7rem] font-serif text-foreground mb-8 leading-tight"
                     >
                         Hire <span className="text-primary italic">Us</span>
                     </motion.h1>
@@ -50,62 +83,53 @@ export default function HireUsPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-foreground/70 text-center max-w-3xl mx-auto"
+                        className="text-2xl lg:text-3xl text-foreground/70 max-w-3xl mx-auto mb-12 font-serif italic"
                     >
-                        Partner with us to create meaningful change in gender equality
+                        "Partner with us to create meaningful change in gender equality"
                     </motion.p>
                     <motion.div
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 }}
-                        className="w-24 h-1 bg-primary mx-auto rounded-full mt-8"
+                        className="w-32 h-1.5 bg-gradient-to-r from-primary via-gold to-primary mx-auto rounded-full"
                     />
                 </div>
             </section>
 
             {/* Contact Info Cards */}
-            <section className="py-16 bg-white relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="py-24 bg-white relative overflow-hidden">
+                <div className="absolute inset-0 opacity-[0.015] persian-floral-bg pointer-events-none" />
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
                         {[
                             {
-                                icon: <Mail className="text-primary" size={32} />,
+                                icon: Mail,
                                 title: "Email Us",
                                 content: "info@pomegranatehouse.org",
                                 link: "mailto:info@pomegranatehouse.org"
                             },
                             {
-                                icon: <Briefcase className="text-primary" size={32} />,
+                                icon: Briefcase,
                                 title: "Our Services",
                                 content: "Consultancy, Research & Training",
                                 link: null
                             },
                             {
-                                icon: <User className="text-primary" size={32} />,
+                                icon: User,
                                 title: "Expert Team",
                                 content: "Global specialists ready to help",
                                 link: null
                             },
                             {
-                                icon: (
-                                    <svg className="text-primary" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                ),
+                                icon: MapPin,
                                 title: "Location",
-                                content: "London",
+                                content: "London, UK",
                                 link: null
                             },
                             {
-                                icon: (
-                                    <svg className="text-primary" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>
-                                ),
+                                icon: Clock,
                                 title: "Office Hours",
-                                content: "Monday - Friday\n10AM - 6PM",
+                                content: "Mon - Fri\n10AM - 6PM",
                                 link: null
                             }
                         ].map((item, idx) => (
@@ -115,18 +139,19 @@ export default function HireUsPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="p-6 bg-accent rounded-[2rem] shadow-sm border border-accent hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center group"
+                                className="p-6 bg-accent/40 backdrop-blur-sm rounded-[2rem] border border-gold/10 hover:border-gold/30 hover:bg-white hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 text-center group relative overflow-hidden"
                             >
-                                <div className="flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                                    {item.icon}
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-gold/5 rounded-bl-3xl -translate-y-1/2 translate-x-1/2" />
+                                <div className="flex justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                                    <item.icon className="text-primary" size={24} />
                                 </div>
-                                <h3 className="text-sm font-bold text-foreground mb-2 uppercase tracking-wider">{item.title}</h3>
+                                <h3 className="text-[9px] font-bold text-foreground/40 mb-2 uppercase tracking-[0.2em]">{item.title}</h3>
                                 {item.link ? (
-                                    <a href={item.link} className="text-sm text-foreground/70 hover:text-primary transition-colors">
+                                    <a href={item.link} className="text-[11px] text-primary font-bold hover:text-gold transition-colors block underline underline-offset-4 decoration-gold/20 leading-tight">
                                         {item.content}
                                     </a>
                                 ) : (
-                                    <p className="text-sm text-foreground/70 whitespace-pre-line">{item.content}</p>
+                                    <p className="text-[11px] text-foreground/60 leading-relaxed font-light whitespace-pre-line">{item.content}</p>
                                 )}
                             </motion.div>
                         ))}
@@ -135,16 +160,16 @@ export default function HireUsPage() {
             </section>
 
             {/* Enquiry Form Section */}
-            <section className="py-24 bg-accent/30 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
+            <section className="py-32 bg-cream relative overflow-hidden persian-floral-bg">
+                <div className="absolute -bottom-24 -left-24 w-full h-[600px] bg-primary/5 blur-[120px] rounded-full" />
 
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="text-center mb-12">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-16">
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-4xl lg:text-5xl font-serif text-foreground mb-6"
+                            className="text-5xl lg:text-7xl font-serif text-foreground mb-8"
                         >
                             Start Your <span className="text-primary italic">Journey</span>
                         </motion.h2>
@@ -153,26 +178,11 @@ export default function HireUsPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="text-lg text-foreground/70 max-w-3xl mx-auto leading-relaxed"
+                            className="text-xl text-foreground/50 font-light max-w-2xl mx-auto leading-relaxed"
                         >
-                            Use the form below to tell us about your enquiry and we'll call you back to schedule an appointment. Please be as detailed as possible. Include what industry you need service for, along with any specific requests.
+                            Use the form below to tell us about your project. Our specialists will review your requirements and reach out to schedule an initial consultation.
                         </motion.p>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="text-base text-foreground/60 max-w-3xl mx-auto mt-4 italic"
-                        >
-                            To help us best serve your enquiry, we recommend that you first describe the issue you have before telling us what you want to achieve.
-                        </motion.p>
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                            className="w-24 h-1 bg-primary mx-auto rounded-full mt-6"
-                        />
+                        <FloralDivider />
                     </div>
 
                     <motion.form
@@ -180,37 +190,37 @@ export default function HireUsPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         onSubmit={handleSubmit}
-                        className="bg-white p-8 lg:p-12 rounded-[2.5rem] shadow-xl border border-accent space-y-6"
+                        className="bg-white/80 backdrop-blur-xl p-10 lg:p-20 rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(117,3,44,0.1)] border border-gold/10 space-y-10"
                     >
                         {/* Name Fields */}
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-bold text-foreground/80 mb-2 uppercase tracking-wider">
-                                    First Name <span className="text-primary">*</span>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <div className="space-y-3">
+                                <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
+                                    First Name <span className="text-primary font-serif">*</span>
                                 </label>
-                                <div className="relative">
-                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={20} />
+                                <div className="relative group">
+                                    <User className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/30 group-focus-within:text-primary transition-colors duration-300" size={18} />
                                     <input
                                         type="text"
                                         required
-                                        className="w-full pl-12 pr-4 py-4 bg-accent border-2 border-accent focus:border-primary rounded-2xl transition-colors duration-300 outline-none"
-                                        placeholder="Enter first name"
+                                        className="w-full pl-14 pr-6 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none text-foreground font-light"
+                                        placeholder="Jane"
                                         value={formData.firstName}
                                         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                                     />
                                 </div>
                             </div>
-                            <div>
-                                <label className="block text-sm font-bold text-foreground/80 mb-2 uppercase tracking-wider">
-                                    Last Name <span className="text-primary">*</span>
+                            <div className="space-y-3">
+                                <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
+                                    Last Name <span className="text-primary font-serif">*</span>
                                 </label>
-                                <div className="relative">
-                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={20} />
+                                <div className="relative group">
+                                    <User className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/30 group-focus-within:text-primary transition-colors duration-300" size={18} />
                                     <input
                                         type="text"
                                         required
-                                        className="w-full pl-12 pr-4 py-4 bg-accent border-2 border-accent focus:border-primary rounded-2xl transition-colors duration-300 outline-none"
-                                        placeholder="Enter last name"
+                                        className="w-full pl-14 pr-6 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none text-foreground font-light"
+                                        placeholder="Doe"
                                         value={formData.lastName}
                                         onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                                     />
@@ -219,50 +229,48 @@ export default function HireUsPage() {
                         </div>
 
                         {/* Email and Phone */}
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-bold text-foreground/80 mb-2 uppercase tracking-wider">
-                                    Email Address <span className="text-primary">*</span>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <div className="space-y-3">
+                                <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
+                                    Email Address <span className="text-primary font-serif">*</span>
                                 </label>
-                                <div className="relative">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={20} />
+                                <div className="relative group">
+                                    <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/30 group-focus-within:text-primary transition-colors duration-300" size={18} />
                                     <input
                                         type="email"
                                         required
-                                        className="w-full pl-12 pr-4 py-4 bg-accent border-2 border-accent focus:border-primary rounded-2xl transition-colors duration-300 outline-none"
-                                        placeholder="your.email@example.com"
+                                        className="w-full pl-14 pr-6 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none text-foreground font-light"
+                                        placeholder="jane.doe@organization.com"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     />
                                 </div>
                             </div>
-                            <div>
-                                <label className="block text-sm font-bold text-foreground/80 mb-2 uppercase tracking-wider">
-                                    Phone <span className="text-primary">*</span>
+                            <div className="space-y-3">
+                                <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
+                                    Phone <span className="text-primary font-serif">*</span>
                                 </label>
-                                <div className="relative">
-                                    <input
-                                        type="tel"
-                                        required
-                                        className="w-full px-4 py-4 bg-accent border-2 border-accent focus:border-primary rounded-2xl transition-colors duration-300 outline-none"
-                                        placeholder="+44 123 456 7890"
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                    />
-                                </div>
+                                <input
+                                    type="tel"
+                                    required
+                                    className="w-full px-6 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none text-foreground font-light"
+                                    placeholder="+44 20 7123 4567"
+                                    value={formData.phone}
+                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                />
                             </div>
                         </div>
 
                         {/* Area of Business */}
-                        <div>
-                            <label className="block text-sm font-bold text-foreground/80 mb-2 uppercase tracking-wider">
-                                Area of Business <span className="text-primary">*</span>
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
+                                Area of Business <span className="text-primary font-serif">*</span>
                             </label>
-                            <div className="relative">
-                                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" size={20} />
+                            <div className="relative group">
+                                <Briefcase className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/30 group-focus-within:text-primary transition-colors duration-300" size={18} />
                                 <select
                                     required
-                                    className="w-full pl-12 pr-4 py-4 bg-accent border-2 border-accent focus:border-primary rounded-2xl transition-colors duration-300 outline-none appearance-none cursor-pointer"
+                                    className="w-full pl-14 pr-10 py-5 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-3xl transition-all duration-500 outline-none appearance-none text-foreground font-light cursor-pointer"
                                     value={formData.areaOfBusiness}
                                     onChange={(e) => setFormData({ ...formData, areaOfBusiness: e.target.value })}
                                 >
@@ -271,39 +279,41 @@ export default function HireUsPage() {
                                         <option key={idx} value={area}>{area}</option>
                                     ))}
                                 </select>
+                                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
+                                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gold/50">
+                                        <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
 
                         {/* Message */}
-                        <div>
-                            <label className="block text-sm font-bold text-foreground/80 mb-2 uppercase tracking-wider">
-                                How Can We Help? <span className="text-primary">*</span>
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-bold text-foreground/40 uppercase tracking-[0.3em] ml-4">
+                                How Can We Help? <span className="text-primary font-serif">*</span>
                             </label>
                             <textarea
                                 required
                                 rows={6}
-                                className="w-full px-4 py-4 bg-accent border-2 border-accent focus:border-primary rounded-2xl transition-colors duration-300 outline-none resize-none"
-                                placeholder="Please describe your enquiry in detail..."
+                                className="w-full px-8 py-6 bg-accent/20 border-b border-gold/10 focus:border-gold rounded-[2.5rem] transition-all duration-500 outline-none resize-none text-foreground font-light leading-relaxed"
+                                placeholder="Please describe your enquiry in detail to help us understand your needs better..."
                                 value={formData.message}
                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             />
-                            <p className="text-xs text-foreground/50 mt-2 italic">
-                                Please do not include confidential or sensitive information in your message.
-                            </p>
                         </div>
 
                         {/* Submit Button */}
-                        <div className="pt-4">
+                        <div className="pt-8">
                             <button
                                 type="submit"
-                                className="w-full px-8 py-5 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30 hover:scale-105 hover:shadow-xl"
+                                className="w-full px-8 py-6 bg-primary text-white rounded-full font-bold text-xl hover:bg-primary/90 transition-all duration-500 shadow-3xl shadow-primary/20 hover:scale-[1.02] border border-gold/30"
                             >
-                                Submit
+                                Secure Your Consultation
                             </button>
                         </div>
 
-                        <p className="text-sm text-foreground/50 text-center italic">
-                            You may also email or call us to make an appointment.
+                        <p className="text-sm text-foreground/30 text-center italic font-light tracking-wide">
+                            "Bridging grassroots realities to global power."
                         </p>
                     </motion.form>
                 </div>
